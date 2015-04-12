@@ -6,8 +6,8 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'sovec.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^$', home),
+    url(r'^$', home, name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^logout/$', 'django.contrib.auth.views.logout',
-                          {'next_page': '/'}),
+                          {'next_page': '/'}, name ='logout'),
 ]
