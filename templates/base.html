@@ -17,6 +17,7 @@
     <script src="/static/js/jquery-1.11.2.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/utils.js"></script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -32,8 +33,6 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href={% url 'home' %}>Home</a></li>
-            <li><a href="#about">Sobre Nosotros</a></li>
-            <li><a href="#contact">Contactanos</a></li>
             {% if auth %}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido <strong>Guest</strong> <b class="caret"></b></a>
@@ -51,6 +50,34 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+
+    <!-- Code for Login / Signup Popup -->
+    <!-- Modal Log in -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+      <div class="modal-dialog" style="margin-top: 150px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel1">Login</h4>
+          </div>
+          <div class="modal-body" id="login_details">
+            <span> ¿Ya tienes una cuenta? </span> </br></br>
+            *<span style="font-weight:bold;">Tu Email</span><br />
+            <input type="text" placeholder="ejemplo@gmail.com" name="login_email" /><br /></br>
+            *<span style="font-weight:bold;" >Contraseña</span><br />
+            <input type="password" placeholder="Contraseña" name="login_password" /><br />
+          </div>
+          <div class="modal-footer" >
+        <input style="float: left" type="button" class="btn btn-success" value="Ingresar" /> 
+           <span class="fp-link"> <a href="#">¿Olvidaste tu contraseña?</a></span>
+           </br></br>
+        <span> ¿Aun no te has registrado?</span>
+        <span id="signup-link" style="cursor:pointer;" class="text-info">Registrarse!</span>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--Modal Login Ends -->
 
     <div class="container theme-showcase" role="main">
       <div class="jumbotron">
