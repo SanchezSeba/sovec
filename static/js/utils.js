@@ -12,6 +12,7 @@ $(document).ready(function(){
 	    $('#login').modal('toggle');
 	 });
 
+	// Register form Ajax submit
     $('#register_form').submit(function() { 
 	    $.ajax({ 
 	        data: $(this).serialize(),
@@ -23,15 +24,16 @@ $(document).ready(function(){
 	           		return true;
 	            }
 	            else{
+	            	// Restart form error messages
 	            	for(var index in response.fields){
 	            		$('#' + response.fields[index] + '_').html('')
 	            		$('#' + response.fields[index] + '_div').removeClass('has-error')
 	            	}
+	            	// Load form error messages
 	            	for(var field in response.errors){
 	            		$('#' + field + '_').append(' ('+ response.errors[field] + ')')
 	            		$('#' + field + '_div').addClass('has-error')
-	            	}/*
-	           		$("#form_validation").html(response.errors.register_username)*/;
+	            	};
 	        		return false;
 	            }
 	        },

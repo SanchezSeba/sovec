@@ -53,7 +53,6 @@ def register_user(request):
 			messages.success(request, 'Registrado correctamente')
 			return HttpResponse(json.dumps({'success':True}), content_type='application/json')
 		else:
-			# messages.error(request, 'Error al registrarse')
 			fields = []
 			for field in form.fields:
 				fields.append(field)

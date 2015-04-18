@@ -70,15 +70,14 @@
             </div>
             <div class="modal-footer" >
               <input style="float: left" type="submit" class="btn btn-success" value="Ingresar" /> 
-                 <span class="fp-link"> <a href="#">¿Olvidaste tu contraseña?</a></span>
                  </br></br>
               <span> ¿Aun no te has registrado?</span>
               <span id="signup-link" style="cursor:pointer;" class="text-info">Registrarse!</span>
             </div>
           </form>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        </div>
+      </div>
+    </div>
     <!--Modal Login Ends -->
 
     <!-- Modal Sign-up Starts -->
@@ -129,31 +128,25 @@
              <span>&nbsp;&nbsp;&nbsp; ¿Ya estas registrado? </span><span id="login-link" class="text-info" style="cursor:pointer;">  Ingresar  </span> 
             </div>
             </form>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- Modal Sign up ends! -->
-    {% if messages %}
-
-<ul class="messages">
-
-    {% for msg in messages %}      
-
-    <li>
-
-        <div class="alert alert-{{msg.level_tag}}" role="alert">
-
-    {{msg.message}}
-
+        </div>
+      </div>
     </div>
+    <!-- Modal Sign up ends! -->
 
-    </li>
+    <!-- Messages section -->
+    {% if messages %}
+      <ul class="messages">
+        {% for msg in messages %} 
+        <li>
+          <div class="alert alert-{{msg.level_tag}}" role="alert">
+          {{msg.message}}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <!-- Messages section end-->
 
-    {% endfor %}
-
-</ul>
-
-{% endif %}
     <div class="container theme-showcase " role="main">
       <div class="jumbotron">
         <h2><center>Bienvenido a </center></h2>
