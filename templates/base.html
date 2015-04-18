@@ -34,7 +34,7 @@
             <li><a href={% url 'home' %}>Home</a></li>
             {% if not user.is_anonymous %}
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido <strong>Guest</strong> <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido <strong>{{user.username}}</strong> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#">Mi Cuenta</a></li>
                   <li class="divider"></li>
@@ -64,9 +64,9 @@
             <div class="modal-body" id="login_details">
               <span> ¿Ya tienes una cuenta? </span> </br></br>
               *<span style="font-weight:bold;">Tu Usuario</span><br />
-              <input type="text" placeholder="Patricio12" name="login_username" /><br /></br>
+              <input type="text" placeholder="Patricio12" name="login_username" required /><br /></br>
               *<span style="font-weight:bold;" >Contraseña</span><br />
-              <input type="password" placeholder="Contraseña" name="login_password" /><br />
+              <input type="password" placeholder="Contraseña" name="login_password" required/><br />
             </div>
             <div class="modal-footer" >
               <input style="float: left" type="submit" class="btn btn-success" value="Ingresar" /> 
@@ -89,20 +89,46 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="myModalLabel2">Registrarse</h4>
           </div>
-          <div class="modal-body" id="signup_details">
-            <span >Nombre</span>
-            <input type="text" placeholder="Nombre" name="register_name" /> </br></br>
-            *<span >Email</span>
-            <input type="text" placeholder="ejemplo@gmail.com" name="register_email" /></br></br>
-            *<span >Contraseña</span>
-            <input type="password" placeholder="Contraseña" name="register_password" /></br></br>
-            *<span >Re-ingresar contraseña</span>
-            <input type="password" placeholder="Re-ingresar contraseña" name="re_register_password" />
-          </div>
-          <div class="modal-footer" >
-      <input style="float: left" type="button" class="btn btn-success"  value="Registrarse" /> 
-           <span>&nbsp;&nbsp;&nbsp; ¿Ya estas registrado? </span><span id="login-link" class="text-info" style="cursor:pointer;">  Ingresar  </span> 
-       </div>
+          <div class='alert alert-error' id='form_validation' style="display: none;"> </div>
+          <form id="register_form" method="post" action="/register/">
+            {% csrf_token %}
+            <div class="modal-body form-group" id="signup_details">
+              <div id="register_username_div">
+              *<label for="register_username">Usuario</label>
+              <label class='control-label' id="register_username_"></label>
+              <input type="text" placeholder="Usuario" class="form-control" name="register_username" id="register_username"/> 
+              </div>
+              <div id="register_name_div">
+              <label for="register_name">Nombres</label>
+              <label class='control-label' id="register_name_"></label>
+              <input type="text" placeholder="Nombres" class="form-control" name="register_name" id="register_name" /> 
+              </div>
+              <div id="register_last_name_div">
+              <label for="register_last_name">Apellidos</label>
+              <label class='control-label' id="register_last_name_"></label>
+              <input type="text" placeholder="Apellidos"  class="form-control" name="register_last_name" id="register_last_name"/>
+              </div>
+              <div id="register_email_div">
+              <label for="register_email">mail</label>
+              <label class='control-label' id="register_email_"></label>
+              <input type="text" placeholder="ejemplo@gmail.com" class="form-control" name="register_email"  id="register_email"/>
+              </div>
+              <div id="register_password_div">
+              *<label for="register_password">Contraseña</label>
+              <label class='control-label' id="register_password_"></label>
+              <input type="password" placeholder="Contraseña" class="form-control" name="register_password"  id="register_password"/>
+              </div>
+              <div id="re_register_password_div">
+              *<label for="re_register_password">Re-ingresar contraseña</label>
+              <label class='control-label' id="re_register_password_"></label>
+              <input type="password" placeholder="Re-ingresar contraseña" class="form-control" name="re_register_password" id="re_register_password"/>
+              </div>
+            </div>
+            <div class="modal-footer" >
+            <input style="float: left" type="submit" class="btn btn-success"  value="Registrarse" /> 
+             <span>&nbsp;&nbsp;&nbsp; ¿Ya estas registrado? </span><span id="login-link" class="text-info" style="cursor:pointer;">  Ingresar  </span> 
+            </div>
+            </form>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
