@@ -13,9 +13,7 @@ def home(request):
 	if request.user.is_authenticated():
 		return render(request,'home.html')
 	else:
-		# form = UserForm
 		return render(request, 'home.html')
-		# return render_to_response('home.html',{'auth':False})
 
 def login_user(request):
 	if request.method == 'POST':

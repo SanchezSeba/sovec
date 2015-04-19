@@ -11,7 +11,7 @@ class UserForm(forms.Form):
 
     def clean(self):
     	super(forms.Form,self).clean()
-
+    	# Checking if username is available
     	if 'register_username' in self.cleaned_data:
     		if User.objects.filter(username=self.cleaned_data['register_username']).exists():
     			self.errors['register_username'] = [u'Nombre de usuario ya existe']

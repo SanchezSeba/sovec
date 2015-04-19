@@ -1,2 +1,32 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
+{% block title %}Asientos{% endblock %}
+{% block head %}
+<link href='/static/css/mycss.css' rel="stylesheet">
+<script type="text/javascript" src="/static/js/jquery.seat-charts.min.js"></script> 
+<script src="/static/js/utils.seat-charts.js"></script> 
+{% endblock %}
+{% block jumbotron %}
+        <h1><center>Cine Joit</center></h1>
+{% endblock%}
+{% block body %}
+<div class="row">
+	<div class="col-md-6" id="seat-map">
+		<div class="front">SCREEN</div>					
+	</div>
+	<div class="booking-details col-md-6">
+		<p>Movie: <span> Gingerclown</span></p>
+		<p>Time: <span>November 3, 21:00</span></p>
+		<p>Seat: </p>
+		<ul id="selected-seats"></ul>
+		<p>Tickets: <span id="counter">0</span></p>
+		<p>Total: <b>$<span id="total">0</span></b></p>
+				
+		<button class="checkout-button">BUY</button>
+				
+		<div id="legend"></div>
+	</div>
+	<div style="clear:both"></div>
+
+</div>
+
+{% endblock %}

@@ -1,5 +1,6 @@
-# # -*- coding: utf-8 -*-
-# from django.shortcuts import render, redirect
+# -*- coding: utf-8 -*-
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 # from django.http import HttpResponse
 # from django.shortcuts import render_to_response
 # from django.contrib.auth import authenticate, login
@@ -8,6 +9,9 @@
 # import json
 # from django.contrib.auth.models import User
 
+# @login_required
+def seats_selection(request):
+	return render(request, 'seat.html')
 
 # def home(request):
 # 	if request.user.is_authenticated():
