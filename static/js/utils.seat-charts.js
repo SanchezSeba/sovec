@@ -59,7 +59,7 @@ $(document).ready(function(){
 		}
 	});
 	//sold seat
-	sc.get(['1_2', '4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2']).status('unavailable');
+	/*sc.get(['1_2', '4_4','4_5','6_6','6_7','8_5','8_6','8_7','8_8', '10_1', '10_2']).status('unavailable');*/
 		
 });
 //sum total money

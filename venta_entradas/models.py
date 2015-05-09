@@ -5,7 +5,7 @@ class Pelicula(models.Model):
 	idPelicula = models.AutoField(primary_key=True)
 	nombre = models.CharField(max_length=100)
 	descripcion = models.CharField(max_length=1000)
-	duracion = models.DateTimeField()
+	duracion = models.DurationField()
 
 class Sala(models.Model):
 	idSala = models.AutoField(primary_key=True)
@@ -16,10 +16,13 @@ class Asiento(models.Model):
 	idSala = models.ForeignKey(Sala)
 	numero = models.IntegerField()
 
+	class Meta:
+		unique_together = ("idSala", "numero")
+
 class Funcion(models.Model):
 	idFuncion = models.AutoField(primary_key=True)
 	idPelicula = models.ForeignKey(Pelicula)
-	idAsiento = models.ForeignKey(Asiento)
+	sala = models.ForeignKey(Sala)
 	hora_inicio = models.DateTimeField()
 
 class Reserva(models.Model):
