@@ -1,5 +1,5 @@
 .front{width: 100%;margin: 5px 32px 45px 32px;background-color: #f0f0f0; color: #666;text-align: center;padding: 3px;border-radius: 5px;} 
-.booking-details {float: right;position: relative;width:200px;height: 450px; } 
+.booking-details {float: right;position: relative;height: 400px; } 
 .booking-details h3 {margin: 5px 5px 0 0;font-size: 16px;} 
 .booking-details p{line-height:26px; font-size:16px; color:#999} 
 .booking-details p span{color:#666} 
@@ -10,7 +10,7 @@ div.seatCharts-seat.available {background-color: #B9DEA0;}
 div.seatCharts-seat.focused {background-color: #76B474;border: none;} 
 div.seatCharts-seat.selected {background-color: #E6CAC4;} 
 div.seatCharts-seat.unavailable {background-color: #472B34;cursor: not-allowed;} 
-div.seatCharts-legend {padding-left: 0px;position: absolute;bottom: 16px;} 
+div.seatCharts-legend {padding-left: 0px;bottom: 16px;} 
 ul.seatCharts-legendList {padding-left: 0px;} 
 .seatCharts-legendItem{float:left; width:90px;margin-top: 10px;line-height: 2;} 
 span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;} 
