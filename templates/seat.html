@@ -4,7 +4,7 @@
 <link href='/static/css/mycss.css' rel="stylesheet">
 <script type="text/javascript" src="/static/js/jquery.seat-charts.min.js"></script> 
 	<script type="text/javascript">
-	var price = 10; //price
+	var price = 3000; //price
 $(document).ready(function(){
 	var $cart = $('#selected-seats'), //Sitting Area
 	$counter = $('#counter'), //Votes
@@ -38,23 +38,43 @@ $(document).ready(function(){
 		},
 		click: function () { //Click event
 			if (this.status() == 'available') { //optional seat
-				$('<li>R'+(this.settings.row+1)+' S'+this.settings.label+'</li>')
+				if( !$("input[name='seat1']").val() ) {
+			        $("input[name='seat1']").val(this.settings.id)
+			        .attr('id', 'selected'+this.settings.id);
+			    }
+			    else{
+			    	if( !$("input[name='seat2']").val() ) {
+				        $("input[name='seat2']").val(this.settings.id)
+				        .attr('id', 'selected'+this.settings.id);
+				    }
+				    else{
+				    	if( !$("input[name='seat3']").val() ) {
+					        $("input[name='seat3']").val(this.settings.id)
+					        .attr('id', 'selected'+this.settings.id);
+					    }
+					    else{
+					    	alert('Solo puedes comprar un maximo de 3 entradas por pelicula')
+					    	return 'available';
+					    }
+				    }
+			    }
+			    $('<li>F:'+(this.settings.row+1)+' A:'+this.settings.label+'</li>')
 					.attr('id', 'cart-item-'+this.settings.id)
 					.data('seatId', this.settings.id)
 					.appendTo($cart);
-
 				$counter.text(sc.find('selected').length+1);
-				$total.text(recalculateTotal(sc)+price);
-							
+				$total.text(recalculateTotal(sc)+price);							
 				return 'selected';
+
 			} else if (this.status() == 'selected') { //Checked
 					//Update Number
 					$counter.text(sc.find('selected').length-1);
 					//update totalnum
-					$total.text(recalculateTotal(sc)-price);
-						
+					$total.text(recalculateTotal(sc)-price);						
 					//Delete reservation
 					$('#cart-item-'+this.settings.id).remove();
+					$('#selected'+this.settings.id).val('')
+					.removeAttr('id')
 					//optional
 					return 'available';
 			} else if (this.status() == 'unavailable') { //sold
@@ -64,9 +84,14 @@ $(document).ready(function(){
 			}
 		}
 	});
-	//sold seat
-	sc.get(['{{asientos}}']).status('unavailable');
-		
+	//sold seat-map
+	{% for seat in seats %}
+	sc.get(['{{seat}}']).status('unavailable');
+	{% endfor %}
+	/*Limpio datos en caso de Fail de Post*/
+	$("input[name='seat1']").val('')
+	$("input[name='seat2']").val('')
+	$("input[name='seat3']").val('')
 });
 //sum total money
 function recalculateTotal(sc) {
@@ -85,19 +110,21 @@ function recalculateTotal(sc) {
 {% block body %}
 <div class="row">
 	<div class="col-md-6" id="seat-map">
-		<div class="front">SCREEN</div>					
+		<div class="front">PANTALLA</div>					
 	</div>
 	<div class="booking-details col-md-6">
-		<p>Movie: <span> {{asientos}}Gingerclown</span></p>
-		<p>Time: <span>November 3, 21:00</span></p>
-		<p>Seat: </p>
-		<ul id="selected-seats"></ul>
-		<p>Tickets: <span id="counter">0</span></p>
-		<p>Total: <b>$<span id="total">0</span></b></p>
-				
-		<button class="checkout-button">BUY</button>
-				
-		<div id="legend"></div>
+		<p>Pelicula: <span> Gingerclown</span></p>
+		<form action='{{ request.path }}' method="POST">
+			{% csrf_token %}
+			<p>Asientos: </p>
+			<ul id="selected-seats"></ul>
+			<p>Tickets: <span id="counter">0</span></p>
+			<p>Total: <b>$<span id="total">0</span></b></p>
+			{{form}}
+			<input type="submit" class="btn" value="Comprar">
+		</form>	
+		<br>
+		<div id="legend" style='width:200px'></div>
 	</div>
 	<div style="clear:both"></div>
 
