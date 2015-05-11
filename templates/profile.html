@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}
+Perfil
+{% endblock %}
+{% block jumbotron %}
+        <h1><center>Cine Joit</center></h1>
+{% endblock%}
+
+{% block body %}
+<div class="container">
+	<div class="page-header">
+	 	<h1>{{user.username|capfirst}}</h1>
+	</div>
+	{% regroup reservas by idFuncion.idPelicula as reservas2 %}
+	{% if not reservas2 %}
+		<div class="well">No tiene tickets reservados</div>
+	{% endif %}
+	<div class="row-fluid">
+		<div class="col-md-12">
+			<h3>Configuracion personal</h3>
+			<a href={% url 'password_change' %}>Cambiar clave</a>
+		</div>
+	</div>
+	<div class"row">
+		<div class="col-md-12">
+			<h3>Tickets</h3>
+			{% for reservas_group in reservas2 %}
+				<div class="panel panel-default">
+				  <!-- Default panel contents -->
+				  <div class="panel-heading"><h4>{{ reservas_group.grouper|capfirst}}</h4></div>
+				  <!-- Table -->
+					<table class="table">
+					  <tr>
+					    <th>Fecha</th>
+					    <th>Sala</th> 
+					    <th># de entradas</th>
+					    <th>Accion</th>
+					  </tr>
+					  {% regroup reservas_group.list by idFuncion as reservas3 %}
+
+						  {% for reservas_group2 in reservas3 %}
+						  <tr>
+						    <td>{{reservas_group2.grouper.hora_inicio}}</td>
+						    <td>{{reservas_group2.grouper.sala}}</td> 
+						    <td>{{reservas_group2.list|length}}</td>
+						    <td>
+						    	<form action={% url 'remove_tickets' reservas_group2.grouper.idFuncion %}>
+							    	<button type="submit" class="btn btn-default" aria-label="Left Align" onclick="return confirm('¿Esta seguro que desea eliminar los ticket seleccionados?')">
+							    	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar
+							    	</button>
+							    </form>
+						    </td>
+						  </tr>
+						  {% endfor %}
+					</table>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}

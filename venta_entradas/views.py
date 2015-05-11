@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from forms import ReservationForm
 from django.contrib import messages
 from functions import *
+from django.core.urlresolvers import reverse
 
 @login_required
 def seats_selection(request, funcion):
@@ -46,5 +47,15 @@ def seats_selection(request, funcion):
 	else:
 		form = ReservationForm(request.user)
 
+	pelicula_nombre = funcion1.idPelicula.nombre
 	reserved_seats = Asiento.objects.filter(reserva__idFuncion=funcion1).values_list('numero')
-	return render(request, 'seat.html',{'seats':generateSeatsPos(reserved_seats), 'form':form})
+	return render(request, 'seat.html',{'seats':generateSeatsPos(reserved_seats),
+										'form':form,
+										'pelicula':pelicula_nombre})
+
+@login_required
+def remove_tickets(request, funcion):
+	funcion1 = get_object_or_404(Funcion, idFuncion=funcion)
+	reservas = Reserva.objects.filter(idFuncion=funcion1, idUsuario_asiste=request.user).delete()
+	messages.success(request, u'Compra de tickets eliminada')	
+	return redirect('profile')

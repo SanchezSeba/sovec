@@ -116,7 +116,7 @@ function recalculateTotal(sc) {
 	<div class="col-md-6 booking-details">
 		<div class="row-fluid">
 			<div class="col-md-8 col-md-offset-4">
-				<p>Pelicula: <span> Gingerclown</span></p>
+				<p>Pelicula: <span> {{pelicula}}</span></p>
 				<form action='{{ request.path }}' method="POST">
 					{% csrf_token %}
 					<p>Asientos: </p>

@@ -7,7 +7,10 @@ from django.contrib import messages
 from forms import UserForm
 import json
 from django.contrib.auth.models import User
-
+from django.contrib.auth.decorators import login_required
+from venta_entradas.models import Pelicula, Reserva
+from datetime import datetime  
+from django.contrib.auth.forms import AdminPasswordChangeForm
 
 def home(request):
 	if request.user.is_authenticated():
@@ -58,3 +61,22 @@ def register_user(request):
 			return HttpResponse(json.dumps(data), content_type='application/json')
 	else:
 		return render(request, 'home.html')
+
+@login_required
+def profile(request):
+	peliculas = Pelicula.objects.filter(funcion__reserva__idUsuario_asiste=request.user).distinct()
+	reservas = Reserva.objects.filter(idUsuario_asiste=request.user,									  
+									  idFuncion__hora_inicio__gt=datetime.now()).order_by('idFuncion__idPelicula')
+	return render(request, 'profile.html', {'reservas':reservas})
+
+@login_required
+def change_password(request):
+	if request.method == 'POST':
+		form = AdminPasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, 'Contraseña modificada exitosamente')
+			return redirect('/')	
+	else:
+		form = AdminPasswordChangeForm(request.user)
+	return render(request, 'change_password.html', {'form':form})
