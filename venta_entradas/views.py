@@ -7,6 +7,7 @@ from forms import ReservationForm
 from django.contrib import messages
 from functions import *
 from django.core.urlresolvers import reverse
+import datetime
 
 @login_required
 def seats_selection(request, funcion):
@@ -49,9 +50,12 @@ def seats_selection(request, funcion):
 
 	pelicula_nombre = funcion1.idPelicula.nombre
 	reserved_seats = Asiento.objects.filter(reserva__idFuncion=funcion1).values_list('numero')
+	sala = funcion1.sala.idSala
 	return render(request, 'seat.html',{'seats':generateSeatsPos(reserved_seats),
 										'form':form,
-										'pelicula':pelicula_nombre})
+										'pelicula':pelicula_nombre,
+										'sala':sala,
+										'hora_inicio':funcion1.hora_inicio})
 
 @login_required
 def remove_tickets(request, funcion):
@@ -59,3 +63,16 @@ def remove_tickets(request, funcion):
 	reservas = Reserva.objects.filter(idFuncion=funcion1, idUsuario_asiste=request.user).delete()
 	messages.success(request, u'Compra de tickets eliminada')	
 	return redirect('profile')
+
+
+def movie_listing(request):
+	template = 'movies.html'
+	peliculas = Pelicula.objects.all()
+	return render(request, template, {'peliculas' : peliculas})
+
+@login_required
+def screening(request, pelicula):
+	template = 'screening.html'
+	pelicula = get_object_or_404(Pelicula, idPelicula = pelicula)
+	funciones = Funcion.objects.filter(idPelicula = pelicula).order_by('hora_inicio')
+	return render(request, template, {'pelicula':pelicula, 'funciones':funciones})

@@ -116,7 +116,10 @@ function recalculateTotal(sc) {
 	<div class="col-md-6 booking-details">
 		<div class="row-fluid">
 			<div class="col-md-8 col-md-offset-4">
-				<p>Pelicula: <span> {{pelicula}}</span></p>
+				<p>Película: <span> {{pelicula}}</span></p>
+				<p>Fecha función: <span>{{hora_inicio|date:"d/m/Y"}}</span></p>
+				<p>Hora inicio: <span>{{hora_inicio|time:"H:i"}}</span></p>
+				<p>Sala: <span>{{sala}}</span></p>
 				<form action='{{ request.path }}' method="POST">
 					{% csrf_token %}
 					<p>Asientos: </p>

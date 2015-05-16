@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Cartelera
+{% endblock %}
+
+{% block head %}
+<style type="text/css">
+	tr.clickable-row{
+		cursor: pointer;
+	}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".clickable-row").click(function(){
+			window.location = "/screening/" + $(this).attr("value");
+		});
+	});
+</script>
+{% endblock %}
+
+{% block jumbotron %}
+<h2><center>Revisa aquí nuestras películas en cartelera</center></h2>
+<h3><center>Haz click sobre alguna película para ver las funciones y horarios disponibles</center></h3>
+{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+<table class="table table-hover table-bordered">
+	<thead>
+		<tr>
+			<th class="col-md-3">Nombre</th>
+			<th class="col-md-7">Descripción</th>
+			<th class="col-md-2">Duración</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for pelicula in peliculas %}
+		<tr class="clickable-row" value="{{pelicula.idPelicula}}">
+			<td>{{pelicula.nombre}}</td>
+			<td>{{pelicula.descripcion}}</td>
+			<td>{{pelicula.duracion}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

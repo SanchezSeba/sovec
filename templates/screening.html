@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+Funciones
+{% endblock %}
+
+{% block head %}
+<style type="text/css">
+	tr.clickable-row{
+		cursor: pointer;
+	}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".clickable-row").click(function(){
+			window.location = "/seat/" + $(this).attr("value");
+		});
+	});
+</script>
+{% endblock %}
+
+{% block jumbotron %}
+<h2><center>Revisa aquí los horarios para la película:</center></h2>
+<h1><center>{{pelicula.nombre}}</center></h1>
+{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+<table class="table table-hover table-bordered">
+	<thead>
+		<tr>
+			<th class="col-md-5">Día</th>
+			<th class="col-md-5">Hora Inicio</th>
+			<th class="col-md-2">Sala</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for funcion in funciones %}
+		<tr class="clickable-row" value="{{funcion.idFuncion}}">
+			<td>{{funcion.hora_inicio|date:"d/m"}}</td>
+			<td>{{funcion.hora_inicio|time:"H:i"}}</td>
+			<td>{{funcion.sala}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock %}

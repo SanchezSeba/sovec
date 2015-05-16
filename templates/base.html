@@ -13,6 +13,17 @@
 
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/utils.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#login").on("shown.bs.modal", function(){
+          $('[name=login_username]').focus();
+        });
+
+        $("#signup").on("shown.bs.modal", function(){
+          $("#register_username").focus();
+        });
+    });
+    </script>
     {% block head %}{% endblock %}
   </head>
   <body role="document">
@@ -29,18 +40,18 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href={% url 'home' %}>Home</a></li>
+            <li><a href={% url 'home' %}>Inicio</a></li>
             {% if not user.is_anonymous %}
             <!-- Modificar numero de pelicula -->
-            <li><a href={% url 'seats_selection' '3'%}>Asientos</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido <strong>{{user.username}}</strong> <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href={% url 'profile' %}>Mi Cuenta</a></li>
-                  <li class="divider"></li>
-                  <li><a href={% url 'logout' %}>Cerrar Sesion</a></li>
-                </ul>
-              </li>
+            <li><a href={% url 'movie_listing' %}>Cartelera</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido <strong>{{user.username}}</strong> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href={% url 'profile' %}>Mi Cuenta</a></li>
+                <li class="divider"></li>
+                <li><a href={% url 'logout' %}>Cerrar Sesion</a></li>
+              </ul>
+            </li>
             {% else %}
             <li><a style="cursor:pointer;" id="loginpopup">Ingresar / Registrarse</a></li>
             {% endif %}
@@ -72,7 +83,7 @@
               <input style="float: left" type="submit" class="btn btn-success" value="Ingresar" /> 
                  </br></br>
               <span> ¿Aun no te has registrado?</span>
-              <span id="signup-link" style="cursor:pointer;" class="text-info">Registrarse!</span>
+              <span id="signup-link" style="cursor:pointer;" class="text-info">Registrarse</span>
             </div>
           </form>
         </div>
