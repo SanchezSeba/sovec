@@ -56,7 +56,6 @@ Cartelera
 		</tbody>
 	</table>
 </div>
-{% load staticfiles %}
 {% for pelicula in peliculas %}
 <div class="col-md-4">
 	<img class="movie-poster" src="/static/images/{{pelicula.poster}}" value="{{pelicula.idPelicula}}">

@@ -5,16 +5,61 @@ Funciones
 {% endblock %}
 
 {% block head %}
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-datepicker.css">
 <style type="text/css">
 	tr.clickable-row{
 		cursor: pointer;
 	}
 </style>
+<script type="text/javascript" src="/static/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		//click para filas de tabla
 		$(".clickable-row").click(function(){
 			window.location = "/seat/" + $(this).attr("value");
 		});
+		//datepicker, para escoger fecha
+		$(".input-group.date").datepicker({
+			startDate:"-1d",
+			format: "dd/mm/yyyy",
+			orientation: "top",
+			autoclose: true,
+			todayHighlight: true
+		});
+		//llamada ajax cuando se selecciona fecha
+		$(".input-group.date").datepicker().on("changeDate", function(){
+			data = {};
+			data["fecha"] = $(".input-group.date").datepicker("getDate").toJSON();
+			data["pelicula"] = "{{pelicula.idPelicula}}";
+			data["csrfmiddlewaretoken"] = "{{csrf_token}}";
+			$.ajax({
+				type: "POST",
+				url: window.location.origin + "/screening/ajax",
+				data: data,
+				success: function(data){
+					fillTable(data);
+					$(".input-group.date").datepicker("hide");
+				}
+			})
+		});
+		//llenado de tabla dinámico
+		function fillTable(data){
+			$("#tbody").empty();
+			var body = "";
+			for (var i = 0; i < Object.keys(data).length; i++) {
+				var hora = data[i].fields.hora_inicio.split("T")[1];
+				hora = hora.substring(0, hora.length - 4);
+
+				body += "<tr class='clickable-row' value=" + data[i].pk + ">";
+				body += "<td>" + hora + "</td>";
+				body += "<td>" + data[i].fields.sala + "</td>";
+				body += "</tr>";
+			}
+			$("#tbody").html(body);
+			$(".clickable-row").click(function(){
+				window.location = "/seat/" + $(this).attr("value");
+			});
+		}
 	});
 </script>
 {% endblock %}
@@ -25,24 +70,31 @@ Funciones
 {% endblock %}
 
 {% block body %}
-<div class="panel panel-default">
+<div class="col-md-9 panel panel-default">
 	<table class="table table-hover table-bordered">
 		<thead>
 			<tr>
-				<th class="col-md-5">Día</th>
-				<th class="col-md-5">Hora Inicio</th>
-				<th class="col-md-2">Sala</th>
+				<th>Hora Inicio</th>
+				<th>Sala</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tbody">
 			{% for funcion in funciones %}
 			<tr class="clickable-row" value="{{funcion.idFuncion}}">
-				<td>{{funcion.hora_inicio|date:"d/m"}}</td>
 				<td>{{funcion.hora_inicio|time:"H:i"}}</td>
 				<td>{{funcion.sala}}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+</div>
+<div class="form-group row">
+	<div class="col-md-3">
+		<label class="control-label">Escoja fecha de función</label>
+		<div class="input-group date" data-date="12-02-2012">
+			<input id="dp-input" class="form-control" type="text" readonly="" value="{% now 'd/m/Y' %}">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+		</div>
+	</div>
 </div>
 {% endblock %}

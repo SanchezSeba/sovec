@@ -7,7 +7,9 @@ from forms import ReservationForm
 from django.contrib import messages
 from functions import *
 from django.core.urlresolvers import reverse
-import datetime
+from datetime import datetime, timedelta, time
+from django.http import HttpResponse
+from django.core import serializers
 
 @login_required
 def seats_selection(request, funcion):
@@ -74,5 +76,34 @@ def movie_listing(request):
 def screening(request, pelicula):
 	template = 'screening.html'
 	pelicula = get_object_or_404(Pelicula, idPelicula = pelicula)
-	funciones = Funcion.objects.filter(idPelicula = pelicula).order_by('hora_inicio')
+
+	'''
+	filtro para las películas por día
+	por defecto se listan las de now().date()
+	'''
+	today = datetime.now().date()
+	tomorrow = today + timedelta(1)
+	today_start = datetime.combine(today, time())
+	today_end = datetime.combine(tomorrow, time())
+
+	funciones = Funcion.objects.filter(idPelicula = pelicula,
+										hora_inicio__lte=today_end,
+										hora_inicio__gte=today_start).order_by('hora_inicio')
 	return render(request, template, {'pelicula':pelicula, 'funciones':funciones})
+
+@login_required
+def screening_ajax(request):
+	date = request.POST['fecha'].split("T")[0]
+	movie = request.POST['pelicula']
+
+	current_date = datetime.strptime(date, '%Y-%m-%d')
+	next_date = current_date + timedelta(1)
+	current_start = datetime.combine(current_date, time())
+	current_end = datetime.combine(next_date, time())
+
+	funciones = Funcion.objects.filter(idPelicula = movie,
+										hora_inicio__lte=current_end,
+										hora_inicio__gte=current_start).order_by('hora_inicio')
+
+	table_data = serializers.serialize("json", funciones)
+	return HttpResponse(table_data, content_type="application/json")
