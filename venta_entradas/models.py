@@ -6,7 +6,7 @@ class Pelicula(models.Model):
 	nombre = models.CharField(max_length=100)
 	descripcion = models.CharField(max_length=1000)
 	duracion = models.DurationField()
-	poster = models.CharField(max_length=1000)
+	poster = models.ImageField(upload_to="images/", max_length=100)
 
 	def __unicode__(self):
 		return unicode(self.__str__())
