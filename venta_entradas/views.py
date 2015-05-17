@@ -67,7 +67,7 @@ def remove_tickets(request, funcion):
 
 def movie_listing(request):
 	template = 'movies.html'
-	peliculas = Pelicula.objects.all()
+	peliculas = Pelicula.objects.all().order_by('nombre')
 	return render(request, template, {'peliculas' : peliculas})
 
 @login_required

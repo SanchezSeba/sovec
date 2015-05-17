@@ -9,12 +9,23 @@ Cartelera
 	tr.clickable-row{
 		cursor: pointer;
 	}
+	.movie-poster{
+		background-size: cover;
+		width: 100%;
+		border-radius: 10px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		cursor: pointer;
+	}
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".clickable-row").click(function(){
 			window.location = "/screening/" + $(this).attr("value");
 		});
+		$(".movie-poster").click(function(){
+			window.location = "/screening/" + $(this).attr("value");
+		})
 	});
 </script>
 {% endblock %}
@@ -45,4 +56,11 @@ Cartelera
 		</tbody>
 	</table>
 </div>
+{% load staticfiles %}
+{% for pelicula in peliculas %}
+<div class="col-md-4">
+	<img class="movie-poster" src="/static/images/{{pelicula.poster}}" value="{{pelicula.idPelicula}}">
+</div>
+{% endfor %}
+
 {% endblock %}
