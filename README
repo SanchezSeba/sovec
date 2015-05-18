@@ -5,7 +5,7 @@ Se recomienda realizar la siguiente instalación dentro de un ambiente virtual:
 0-sudo apt-get install python-virtualenv (instalación local, ambiente virtual)
 1-sudo apt-get install python-mysqldb (instalación local, requiere mysql)
 2-sudo apt-get install libapache2-mod-wsgi (instalación local, requiere apache)
-3-Instalar las dependencias mencionadas en requirements.txt. Puede usar: pip install -r requirements.txt
+3-Instalar las dependencias mencionadas en requirements.txt. Puede usar: pip install -r requirements.txt (si está en el ambiente virtual, primero tendrá que hacer: source bin/activate)
 4-Ejecutar: python manage.py migrate (en caso que esto genere un error puede usar syncdb)
 5-Para ejecutar la app en modo producción, ir a /etc/apache2/sites-enabled, crear un archivo llamado sovec.conf y agregar dentro de este lo siguiente (debe modificar las direcciones correspondientes a la ubicación de la aplicación, así como la dirección donde esta el ambiente virtual):
 
