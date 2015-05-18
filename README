@@ -2,6 +2,7 @@ README
 
 Se recomienda realizar la siguiente instalación dentro de un ambiente virtual:
 
+0-sudo apt-get install python-virtualenv (instalación local, ambiente virtual)
 1-sudo apt-get install python-mysqldb (instalación local, requiere mysql)
 2-sudo apt-get install libapache2-mod-wsgi (instalación local, requiere apache)
 3-Instalar las dependencias mencionadas en requirements.txt. Puede usar: pip install -r requirements.txt
