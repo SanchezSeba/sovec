@@ -82,7 +82,7 @@ Funciones
 			{% for funcion in funciones %}
 			<tr class="clickable-row" value="{{funcion.idFuncion}}">
 				<td>{{funcion.hora_inicio|time:"H:i"}}</td>
-				<td>{{funcion.sala}}</td>
+				<td>{{funcion.sala.numero}}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
