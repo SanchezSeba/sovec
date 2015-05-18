@@ -16,7 +16,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_ROOT = BASE_DIR + '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/images/'
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +26,7 @@ MEDIA_URL = '/images/'
 SECRET_KEY = 'kkj8jw4vn^hx)!!$^9lz70f-tdh^0n834j52yu6mwx+kyt5u)6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -119,3 +120,4 @@ STATICFILES_DIRS = (
 )
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'productionstatic/')
