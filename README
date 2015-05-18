@@ -1,0 +1,64 @@
+README
+
+Se recomienda realizar la siguiente instalacion dentro de un ambiente virtual:
+
+1-sudo apt-get install python-mysqldb, 
+2-Instalar las aplicaciones mencionadas en requierements.txt. Puede usar pip install -r requirements.txt
+3-sudo apt-get install libapache2-mod-wsgi
+4- python manage.py migrate (en caso que esto genere un error puede usar syncdb)
+5-Para ejecutar la app en modo produccion:: ir a /etc/apache2/sites-enabled crea un archivo llamado sovec.conf y agregar dentro de este lo siguiente (debe modificar las direcciones acordes a donde coloco la aplicacion, asi como la direccion donde esta el ambiente virtual.):
+
+WSGIScriptAlias / /path/to/app/wsgi.py
+#En la siguiente linea modifique la version de python a la que esta usando
+WSGIPythonPath /path/to/app:/path/to/virtualenv/local/lib/python2.7/site-packages
+#Si no esta usando virtualenv omita la linea anterior y coloque
+WSGIPythonPath /path/to/app
+
+<Directory /path/to/app>
+<Files wsgi.py>
+Require all granted
+</Files>
+</Directory>
+
+Alias /static/ /path/to/app/productionstatic/
+Alias /media/ /path/to/app/media/
+<Directory /path/to/app/productionstatic>
+Require all granted
+</Directory>
+
+<Directory /path/to/app/media>
+Require all granted
+</Directory>
+
+
+
+
+###############Ejemplo de uso de lo anterior##################
+
+WSGIScriptAlias / /home/seba/Desarrollo/seguridad_de_software/sovec/sovec/wsgi.py
+WSGIPythonPath /home/seba/Desarrollo/seguridad_de_software/sovec:/home/seba/.virtualenvs/seguirdad_tarea1/local/lib/python2.7/site-packages
+
+<Directory /home/seba/Desarrollo/seguridad_de_software/sovec>
+<Files wsgi.py>
+Require all granted
+</Files>
+</Directory>
+
+Alias /static/ /home/seba/Desarrollo/seguridad_de_software/sovec/productionstatic/
+Alias /media/ /home/seba/Desarrollo/seguridad_de_software/sovec/media/
+<Directory /home/seba/Desarrollo/seguridad_de_software/sovec/productionstatic>
+Require all granted
+</Directory>
+
+<Directory /home/seba/Desarrollo/seguridad_de_software/sovec/media>
+Require all granted
+</Directory>
+
+6- A la carpeta "/media" de la aplicacion debe aplicarle permiso 777, usando el comando 'chmod 777 -R media/'
+7-Finalmente debe reiniciar apache: 'sudo service apache2 restart'
+8-Ingresar a 127.0.0.1 
+9-Para comenzar a usar la aplicacion cree un usuario Administrador directamente en la base de datos
+10-La aplicacion posee la vista que se ve ingresando directamente a la direccion 127.0.0.1 o si es administrador puede ingresar a 127.0.0.1/admin para realizar labores de administrador (agregar/quitar peliculas, salas y funciones)
+11-La aplicacion permite a un usuario no administrador reserver asientos para funciones (maximo 3 asientos por funcion)
+12-El usuario administrador puede realizar reserver para cualquier usuario (como si fuera el vendedor de la boleteria)
+13-Cualquier duda sanchez.sebastian.r@gmail.com :D
