@@ -59,7 +59,7 @@ Cartelera
 {% for pelicula in peliculas %}
 {% load staticfiles %}
 <div class="col-md-4">
-	<img class="movie-poster" src="/{{ MEDIA_URL }}{{pelicula.poster}}" value="{{pelicula.idPelicula}}">
+	<img class="movie-poster" src="{{ MEDIA_URL }}{{pelicula.poster}}" value="{{pelicula.idPelicula}}">
 </div>
 {% endfor %}
 

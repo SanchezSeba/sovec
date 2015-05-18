@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^login/$', login_user, name='login_user'),
     url(r'^register/$', register_user, name='register_user'),
     url(r'^profile/$', profile, name='profile'),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'media'}),
     url(r'^', include('venta_entradas.urls')),
 ]
