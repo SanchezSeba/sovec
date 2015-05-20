@@ -4,62 +4,43 @@ Se recomienda realizar la siguiente instalación dentro de un ambiente virtual:
 
 0-sudo apt-get install python-virtualenv (instalación local, ambiente virtual)
 1-sudo apt-get install python-mysqldb (instalación local, requiere mysql)
-2-sudo apt-get install libapache2-mod-wsgi (instalación local, requiere apache)
-3-Instalar las dependencias mencionadas en requirements.txt. Puede usar: pip install -r requirements.txt (si está en el ambiente virtual, primero tendrá que hacer: source bin/activate)
-4-Ejecutar: python manage.py migrate (en caso que esto genere un error puede usar syncdb)
-5-Para ejecutar la app en modo producción, ir a /etc/apache2/sites-enabled, crear un archivo llamado sovec.conf y agregar dentro de este lo siguiente (debe modificar las direcciones correspondientes a la ubicación de la aplicación, así como la dirección donde esta el ambiente virtual):
-
-
-	WSGIScriptAlias / /path/to/app/wsgi.py
-	#En la siguiente linea modifique la version de python a la que esta usando
-	WSGIPythonPath /path/to/app:/path/to/virtualenv/local/lib/python2.7/site-packages
-	#Si no esta usando virtualenv omita la linea anterior y coloque
-	WSGIPythonPath /path/to/app
-
-	<Directory /path/to/app>
-	<Files wsgi.py>
-	Require all granted
-	</Files>
-	</Directory>
-
-	Alias /static/ /path/to/app/productionstatic/
-	Alias /media/ /path/to/app/media/
-	<Directory /path/to/app/productionstatic>
-	Require all granted
-	</Directory>
-
-	<Directory /path/to/app/media>
-	Require all granted
-	</Directory>
-
-
-############### Ejemplo de uso de lo anterior ##################
-
-	WSGIScriptAlias / /home/seba/Desarrollo/seguridad_de_software/sovec/sovec/wsgi.py
-	WSGIPythonPath /home/seba/Desarrollo/seguridad_de_software/sovec:/home/seba/.virtualenvs/seguirdad_tarea1/local/lib/python2.7/site-packages
-
-	<Directory /home/seba/Desarrollo/seguridad_de_software/sovec>
-	<Files wsgi.py>
-	Require all granted
-	</Files>
-	</Directory>
-
-	Alias /static/ /home/seba/Desarrollo/seguridad_de_software/sovec/productionstatic/
-	Alias /media/ /home/seba/Desarrollo/seguridad_de_software/sovec/media/
-	<Directory /home/seba/Desarrollo/seguridad_de_software/sovec/productionstatic>
-	Require all granted
-	</Directory>
-
-	<Directory /home/seba/Desarrollo/seguridad_de_software/sovec/media>
-	Require all granted
-	</Directory>
-
-
-6-A la carpeta "/media" de la aplicación debe otorgarle todos los permisos, usando el comando: chmod 777 -R media/
-7-Finalmente debe reiniciar apache: sudo service apache2 restart
-8-Ingresar a 127.0.0.1 (no localhost)
-9-Para comenzar a usar la aplicación cree un usuario Administrador directamente en la base de datos
-10-La aplicación posee la vista que se ve ingresando directamente a la dirección 127.0.0.1, o si es administrador puede ingresar a 127.0.0.1/admin para realizar labores de administrador (agregar/quitar peliculas, salas y funciones)
+2-sudo apt-get install libmysqlclient-dev
+3-sudo apt-get install  python-dev
+4-Instalar las dependencias mencionadas en requirements.txt. Puede usar: pip install -r requirements.txt (si está en el ambiente virtual, primero tendrá que hacer: source envName/bin/activate)
+5-En MySQL crear una nueva base de datos usando 'CREATE DATABASE sovec_db'
+6-Ejecutar: python manage.py migrate (en caso que esto genere un error puede usar syncdb)
+7-python manage.py runserver
+8-Ingresar a 127.0.0.1:8000
+9-Para comenzar a usar la aplicación cree un usuario Administrador directamente en la base de datos (debe darle permisos de superusuario y de staff)
+10-La aplicación posee la vista que se ve ingresando directamente a la dirección 127.0.0.1:8000, o si es administrador puede ingresar a 127.0.0.1:8000/admin para realizar labores de administrador (agregar/quitar peliculas, salas y funciones)
 11-La aplicación permite a un usuario no administrador reservar asientos para funciones (máximo 3 asientos por función)
 12-El usuario administrador puede realizar reservas para cualquier usuario (como si fuera el vendedor de la boletería)
 13-Cualquier duda sanchez.sebastian.r@gmail.com :D
+
+
+##################################
+Para comenzar a usar la aplicacion puede hacer uso del dump mysql que viene incorporado (sovec_db.sql). Este contiene usuarios, peliculas, salas, asientos y funciones.
+
+Numero de peliculas:4
+Numero de salas: 3
+Numero de asientos: 108 asientos por sala
+Funciones: cada pelicula tiene 2 funciones para el día 2 de Junio de 2015 (usted puede agregar mas funciones si lo desea :) )
+
+Los usuarios de este son:
+
+User:administrador1
+pass:administrador1
+rol:superusuario
+
+User:administrador2
+pass:administrador2
+rol:superusuario
+
+User:usuario1
+pass:usuario1
+rol:usuario
+
+User:usuario2
+pass:usuario2
+rol:usuario
+###################################
