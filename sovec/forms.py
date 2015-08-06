@@ -7,8 +7,10 @@ class UserForm(forms.Form):
     register_name = forms.CharField(max_length=25, required=False)
     register_last_name = forms.CharField(max_length=25, required=False)
     register_email = forms.EmailField(required=False)
-    register_password = forms.CharField(max_length=25, min_length=8)
-    re_register_password = forms.CharField(max_length=25, min_length=8)
+    register_password = forms.CharField(max_length=25, min_length=8,
+                        widget=forms.TextInput(attrs={'autocomplete':'off'}))
+    re_register_password = forms.CharField(max_length=25, min_length=8,
+                             widget=forms.TextInput(attrs={'autocomplete':'off'}))
 
     def clean(self):
     	super(forms.Form,self).clean()

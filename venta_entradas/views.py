@@ -57,7 +57,8 @@ def seats_selection(request, funcion):
 										'form':form,
 										'pelicula':pelicula_nombre,
 										'sala':sala,
-										'hora_inicio':funcion1.hora_inicio})
+										'hora_inicio':funcion1.hora_inicio},
+				   content_type="text/html")
 
 @login_required
 def remove_tickets(request, funcion):
@@ -70,7 +71,7 @@ def remove_tickets(request, funcion):
 def movie_listing(request):
 	template = 'movies.html'
 	peliculas = Pelicula.objects.all().order_by('nombre')
-	return render(request, template, {'peliculas' : peliculas})
+	return render(request, template, {'peliculas' : peliculas}, content_type="text/html")
 
 @login_required
 def screening(request, pelicula):
@@ -89,7 +90,7 @@ def screening(request, pelicula):
 	funciones = Funcion.objects.filter(idPelicula = pelicula,
 										hora_inicio__lte=today_end,
 										hora_inicio__gte=today_start).order_by('hora_inicio')
-	return render(request, template, {'pelicula':pelicula, 'funciones':funciones})
+	return render(request, template, {'pelicula':pelicula, 'funciones':funciones}, content_type="text/html")
 
 @login_required
 def screening_ajax(request):

@@ -7,11 +7,14 @@ Se recomienda realizar la siguiente instalación dentro de un ambiente virtual:
 2-sudo apt-get install libmysqlclient-dev
 3-sudo apt-get install  python-dev
 4-Instalar las dependencias mencionadas en requirements.txt. Puede usar: pip install -r requirements.txt (si está en el ambiente virtual, primero tendrá que hacer: source envName/bin/activate)
-5-En MySQL crear una nueva base de datos usando 'CREATE DATABASE sovec_db'
-6-Ejecutar: python manage.py migrate (en caso que esto genere un error puede usar syncdb)
+5-En MySQL crear una nueva base de datos usando 'CREATE DATABASE sovec_db;'
+6- Si va utilizar el dump entregado junto a esta app:
+       Cargue el archivo sovec_db.sql en la bd recien creada.
+Si no va a utilizar el dump:
+       Ejecutar: python manage.py migrate (en caso que esto genere un error puede usar syncdb)
 7-python manage.py runserver
 8-Ingresar a 127.0.0.1:8000
-9-Para comenzar a usar la aplicación cree un usuario Administrador directamente en la base de datos (debe darle permisos de superusuario y de staff)
+9-Para comenzar a usar la aplicación (si es que no esta utilizando el dump) cree un usuario Administrador directamente en la base de datos (debe darle permisos de superusuario y de staff)
 10-La aplicación posee la vista que se ve ingresando directamente a la dirección 127.0.0.1:8000, o si es administrador puede ingresar a 127.0.0.1:8000/admin para realizar labores de administrador (agregar/quitar peliculas, salas y funciones)
 11-La aplicación permite a un usuario no administrador reservar asientos para funciones (máximo 3 asientos por función)
 12-El usuario administrador puede realizar reservas para cualquier usuario (como si fuera el vendedor de la boletería)

@@ -14,9 +14,9 @@ from django.contrib.auth.forms import AdminPasswordChangeForm
 
 def home(request):
 	if request.user.is_authenticated():
-		return render(request,'home.html')
+		return render(request,'home.html', content_type="text/html")
 	else:
-		return render(request, 'home.html')
+		return render(request, 'home.html', content_type="text/html")
 
 def login_user(request):
 	if request.method == 'POST':
@@ -31,9 +31,9 @@ def login_user(request):
 			return redirect('/')
 		else:
 			messages.error(request, 'Error al ingresar Usuario o Contraseña')
-			return render(request, "home.html")
+			return render(request, "home.html", content_type="text/html")
 	else:
-		return render(request, 'home.html')
+		return render(request, 'home.html', content_type="text/html")
 
 def register_user(request):
 	if request.method == 'POST':
@@ -60,14 +60,14 @@ def register_user(request):
 			data = {'success':False, 'errors':form.errors, 'fields':fields}
 			return HttpResponse(json.dumps(data), content_type='application/json')
 	else:
-		return render(request, 'home.html')
+		return render(request, 'home.html', content_type="text/html")
 
 @login_required
 def profile(request):
 	peliculas = Pelicula.objects.filter(funcion__reserva__idUsuario_asiste=request.user).distinct()
 	reservas = Reserva.objects.filter(idUsuario_asiste=request.user,									  
 									  idFuncion__hora_inicio__gt=datetime.now()).order_by('idFuncion__idPelicula')
-	return render(request, 'profile.html', {'reservas':reservas})
+	return render(request, 'profile.html', {'reservas':reservas}, content_type="text/html")
 
 @login_required
 def change_password(request):
@@ -79,4 +79,4 @@ def change_password(request):
 			return redirect('/')	
 	else:
 		form = AdminPasswordChangeForm(request.user)
-	return render(request, 'change_password.html', {'form':form})
+	return render(request, 'change_password.html', {'form':form}, content_type="text/html")
